@@ -1,10 +1,9 @@
-import dotenv from "dotenv";
-dotenv.config();
 import { Pinecone } from "@pinecone-database/pinecone";
 import type { EmbeddingsInterface } from "@langchain/core/embeddings";
 import { Document } from "langchain/document";
 import { PineconeStore, PineconeStoreParams } from "@langchain/pinecone";
 import { AxiosError } from "axios";
+import { PINECONE_API_KEY } from "constants/env";
 
 type UpdatePineconeIndex = {
   pineconeIndexName: string;
@@ -20,7 +19,7 @@ type GetVectorStoreParams = {
 };
 
 const pinecone = new Pinecone({
-  apiKey: process.env.PINECONE_API_KEY ?? "",
+  apiKey: PINECONE_API_KEY,
 });
 
 async function addEmbeddingsToPinecone({

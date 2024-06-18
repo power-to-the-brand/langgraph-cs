@@ -1,6 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import readline from "readline";
 import { ChatGroq } from "@langchain/groq";
 import {
@@ -13,9 +10,10 @@ import {
 import { PromptTemplate, ChatPromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { BaseMessage, HumanMessage } from "@langchain/core/messages";
+import { GROQ_API_KEY } from "constants/env";
 
 const chatGroq = new ChatGroq({
-  apiKey: process.env.GROQ_API_KEY,
+  apiKey: GROQ_API_KEY,
   model: "llama3-8b-8192",
 });
 
