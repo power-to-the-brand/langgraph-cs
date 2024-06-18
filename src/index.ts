@@ -10,9 +10,9 @@ import {
   StateGraph,
   StateGraphArgs,
 } from "@langchain/langgraph";
-import { PromptTemplate } from "@langchain/core/prompts";
+import { PromptTemplate, ChatPromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
-import { BaseMessage } from "@langchain/core/messages";
+import { BaseMessage, HumanMessage } from "@langchain/core/messages";
 
 const chatGroq = new ChatGroq({
   apiKey: process.env.GROQ_API_KEY,
@@ -80,7 +80,7 @@ const promptQuestion = async () => {
 };
 
 const execute = async (question: string) => {
-  const messages = [["user", question]];
+  const messages = [new HumanMessage(question)];
   const inputs = { messages };
 
   const config = { recursionLimit: 50, configurable: { threadId } };
@@ -88,6 +88,7 @@ const execute = async (question: string) => {
     ...config,
     streamMode: "values",
   })) {
+    console.log("msgs-----", messages);
     let msg = messages[messages?.length - 1];
     if (msg?.content) {
       console.log("System: " + msg.content);
